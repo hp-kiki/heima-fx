@@ -45,6 +45,9 @@ export default {
       var res = await login(this.userxinxi)
       // console.log(res)
       if (res.data.message === '登录成功') {
+        // 将token存在本地
+        localStorage.setItem('fx-heimatoken', res.data.data.token)
+        localStorage.setItem('fx-heimaid', res.data.data.user.id)
         this.$router.push({ name: 'Index' })
       } else {
         this.$toast.fail(res.data.message)

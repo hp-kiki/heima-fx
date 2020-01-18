@@ -18,3 +18,10 @@ export const register = (data) => {
     data
   })
 }
+
+// // 个人信息
+export const mycenter = (id) => {
+  return axios({
+    url: `/user/${id}`
+  })
+}
