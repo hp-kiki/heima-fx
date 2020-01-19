@@ -187,15 +187,17 @@ export default {
   async mounted () {
     this.id = this.$route.params.id
     var res = await mycenter(this.id)
-    console.log(res)
+
     this.userobj = res.data.data
+    console.log(this.userobj)
     // 处理图片
     if (this.userobj.head_img) {
       var baseURL = localStorage.getItem('heima_baseURL')
       this.userobj.head_img = baseURL + this.userobj.head_img
     } else {
-      this.userxinxi.head_img = './avatar.jpg'
+      this.userobj.head_img = './avatar.jpg'
     }
+    console.log(this.userobj)
   }
 }
 </script>
