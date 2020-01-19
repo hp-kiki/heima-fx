@@ -1,5 +1,5 @@
 <template>
-  <div class="mycell">
+  <div class="mycell" @click="cellzi">
       <span class="cellleft">{{cellleft}}</span>
       <div class="cellright">
           <span class="right">{{cellright}}</span>
@@ -11,7 +11,13 @@
 
 <script>
 export default {
-  props: ['cellleft', 'cellright']
+  props: ['cellleft', 'cellright'],
+  methods: {
+    // 告知子组件有人点击
+    cellzi () {
+      this.$emit('click')
+    }
+  }
 }
 </script>
 

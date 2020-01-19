@@ -9,6 +9,7 @@ import Login from '@/views/login.vue'
 import Index from '@/views/index.vue'
 import Register from '@/views/register.vue'
 import Mycenter from '@/views/mycenter.vue'
+import Editprofile from '@/views/EditProfile.vue'
 Vue.use(VueRouter)
 
 // 创建路由对象
@@ -37,6 +38,12 @@ var router = new VueRouter({
       name: 'Mycenter',
       path: '/mycenter/:id',
       component: Mycenter
+    },
+    // 编辑个人中心的资料
+    {
+      name: 'Editprofile',
+      path: '/editprofile/:id',
+      component: Editprofile
     }
 
   ]

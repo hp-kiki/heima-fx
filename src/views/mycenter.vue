@@ -3,10 +3,10 @@
     <div class="header">
         <van-icon name="arrow-left back" @click="$router.back()"/>
     </div>
-    <router-link to="/">
+    <router-link :to="`/editprofile/${userxinxi.id}`">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
-        <img :src="userxinxi.head_img?userxinxi.head_img:'./avatar.jpg'"/>
+        <img :src="userxinxi.head_img"/>
         <div class="profile-center">
           <div class="name">
             <span class="iconfont iconxingbienan" v-if="userxinxi.gender=='1'"></span>
@@ -51,6 +51,14 @@ export default {
     this.userxinxi = res.data.data
     // 添加事件
     this.userxinxi.time = new Date()
+    // 处理图片
+    if (this.userxinxi.head_img) {
+      var baseURL = localStorage.getItem('heima_baseURL')
+      this.userxinxi.head_img = baseURL + this.userxinxi.head_img
+    } else {
+      this.userxinxi.head_img = './avatar.jpg'
+    }
+    // console.log(this.userxinxi)
   },
   methods: {
     // 点击退出登录触发

@@ -25,3 +25,12 @@ export const mycenter = (id) => {
     url: `/user/${id}`
   })
 }
+
+// 编辑个人信息
+export const editprofilesuer = (id, data) => {
+  return axios({
+    method: 'post',
+    url: `/user_update/${id}`,
+    data
+  })
+}
