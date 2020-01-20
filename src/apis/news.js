@@ -21,3 +21,12 @@ export const postcomment = (id) => {
     url: `/post_comment/${id}`
   })
 }
+
+// 发布评论
+export const fabucomment = (id, data) => {
+  return axios({
+    method: 'post',
+    url: `/post_comment/${id}`,
+    data
+  })
+}

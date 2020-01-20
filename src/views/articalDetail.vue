@@ -6,7 +6,7 @@
           <van-icon name="arrow-left back" @click="$router.back()" />
           <span class="iconfont iconnew new"></span>
         </div>
-        <span :class="{guangzhu:details.has_follow}">{{gz}}</span>
+        <span :class="{guangzhu:details.has_follow}" @click="gzuser">{{gz}}</span>
       </div>
       <div class="detail">
         <div class="title">{{details.title}}</div>
@@ -45,7 +45,7 @@
         <div class="more">更多跟帖</div>
       </div>
       <!-- 评论 -->
-      <!-- <pinglun :post="detailslist"></pinglun> -->
+      <comment :postxinxi="details" @Postacomment="init();++details.comment_length"></comment>
 
     </div>
   </div>
@@ -53,9 +53,10 @@
 
 <script>
 import { post, postcomment } from '../apis/news'
+import comment from '../components/comment'
 export default {
   components: {
-
+    comment
   },
   data () {
     return {
@@ -69,11 +70,36 @@ export default {
       gz: ''
     }
   },
+  methods: {
+    // 点击关注用户
+    gzuser () {
+
+    },
+    // 封装获取评论数据
+    async init () {
+      // 获取评论列表
+      let res2 = await postcomment(this.id)
+
+      this.commentlist = res2.data.data
+      this.commentlist = this.commentlist.map(v => {
+        if (v.user.head_img) {
+          v.user.head_img = localStorage.getItem('heima_baseURL') + v.user.head_img
+        } else {
+          v.user.head_img = './avatar.jpg'
+        }
+        return v
+      })
+
+      // 自动刷新到页面顶部
+      window.scrollTo(0, 0)
+    // console.log(this.commentlist)
+    }
+  },
   async mounted () {
     this.id = this.$route.params.id
     // 获取文章详情数据
     let res = await post(this.id)
-    // console.log(res)
+    console.log(res)
     this.details = res.data.data
     if (this.details.has_follow) {
       this.gz = '已关注'
@@ -81,18 +107,7 @@ export default {
       this.gz = '关注'
     }
     // 获取评论列表
-    let res2 = await postcomment(this.id)
-
-    this.commentlist = res2.data.data
-    this.commentlist = this.commentlist.map(v => {
-      if (v.user.head_img) {
-        v.user.head_img = localStorage.getItem('heima_baseURL') + v.user.head_img
-      } else {
-        v.user.head_img = './avatar.jpg'
-      }
-      return v
-    })
-    // console.log(this.commentlist)
+    this.init()
   }
 
 }

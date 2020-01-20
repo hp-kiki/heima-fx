@@ -12,6 +12,7 @@ import Mycenter from '@/views/mycenter.vue'
 import Editprofile from '@/views/EditProfile.vue'
 import Srarch from '@/views/srarch.vue'
 import ArticalDetail from '@/views/articalDetail.vue'
+import Goodcomment from '../views/goodcomments.vue'
 Vue.use(VueRouter)
 
 // 创建路由对象
@@ -62,6 +63,12 @@ var router = new VueRouter({
       name: 'ArticalDetail',
       path: '/articalDetail/:id',
       component: ArticalDetail
+    },
+    // 精彩评论
+    {
+      name: 'Goodcomment',
+      path: '/goodcomment/:id',
+      component: Goodcomment
     }
 
   ]
