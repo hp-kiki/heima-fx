@@ -53,6 +53,7 @@
 
 <script>
 import { post, postcomment } from '../apis/news'
+import { userfollows, userunfollow } from '../apis/user'
 import comment from '../components/comment'
 export default {
   components: {
@@ -72,8 +73,25 @@ export default {
   },
   methods: {
     // 点击关注用户
-    gzuser () {
-
+    async gzuser () {
+      if (this.details.has_follow) {
+        // 取消关注
+        var res2 = await userunfollow(this.details.user.id)
+        // console.log(res2)
+        if (res2.data.message === '取消关注成功') {
+          this.details.has_follow = !this.details.has_follow
+          this.gz = '关注'
+          this.$toast.success(res2.data.message)
+        }
+      } else {
+        var res = await userfollows(this.details.user.id)
+        // console.log(res)
+        if (res.data.message === '关注成功') {
+          this.details.has_follow = !this.details.has_follow
+          this.gz = '已关注'
+          this.$toast.success(res.data.message)
+        }
+      }
     },
     // 封装获取评论数据
     async init () {

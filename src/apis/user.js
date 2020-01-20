@@ -34,3 +34,17 @@ export const editprofilesuer = (id, data) => {
     data
   })
 }
+
+// 关注用户
+export const userfollows = (id) => {
+  return axios({
+    url: `/user_follows/${id}`
+  })
+}
+
+// 取消关注用户
+export const userunfollow = (id) => {
+  return axios({
+    url: `/user_unfollow/${id}`
+  })
+}
