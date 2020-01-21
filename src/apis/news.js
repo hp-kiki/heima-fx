@@ -30,3 +30,10 @@ export const fabucomment = (id, data) => {
     data
   })
 }
+
+// 点赞文章
+export const postlike = (id) => {
+  return axios({
+    url: `/post_like/${id}`
+  })
+}

@@ -6,6 +6,8 @@ import router from './routers/index.js'
 
 import Vant from 'vant'
 import 'vant/lib/index.css'
+// 引入重置样式
+import './styles/reset.less'
 
 Vue.config.productionTip = false
 

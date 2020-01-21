@@ -19,7 +19,7 @@
            <video :src="details.content" controls></video>
          </div>
         <div class="opt">
-          <span class="like" :class="{dianzan:details.like_length!=0}">
+          <span class="like" :class="{dianzan:details.has_like}" @click="like">
             <van-icon name="good-job-o" />{{details.like_length}}
           </span>
           <span class="chat">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { post, postcomment } from '../apis/news'
+import { post, postcomment, postlike } from '../apis/news'
 import { userfollows, userunfollow } from '../apis/user'
 import comment from '../components/comment'
 export default {
@@ -72,6 +72,20 @@ export default {
     }
   },
   methods: {
+    // 点赞
+    async like () {
+      if (!this.details.has_like) {
+        var res = await postlike(this.id)
+        // console.log(res)
+        if (res.data.message === '点赞成功') {
+          this.details.has_like = true
+          ++this.details.like_length
+        }
+      } else {
+        this.details.has_like = false
+        --this.details.like_length
+      }
+    },
     // 点击关注用户
     async gzuser () {
       if (this.details.has_follow) {
@@ -97,7 +111,7 @@ export default {
     async init () {
       // 获取评论列表
       let res2 = await postcomment(this.id)
-
+      // console.log(res2)
       this.commentlist = res2.data.data
       this.commentlist = this.commentlist.map(v => {
         if (v.user.head_img) {
@@ -117,7 +131,7 @@ export default {
     this.id = this.$route.params.id
     // 获取文章详情数据
     let res = await post(this.id)
-    console.log(res)
+    // console.log(res)
     this.details = res.data.data
     if (this.details.has_follow) {
       this.gz = '已关注'

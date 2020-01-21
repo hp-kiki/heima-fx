@@ -28,16 +28,30 @@
 <script>
 import { fabucomment } from '../apis/news'
 export default {
-  props: ['postxinxi'],
+  props: ['postxinxi', 'commentlist'], // commentlist是子组件传来的数据
   data () {
     return {
       isFocus: false
     }
   },
+  // 监听commentlist
+  watch: {
+    commentlist () {
+      if (this.commentlist) {
+        this.isFocus = true
+      }
+    }
+  },
   methods: {
     // 点击发送发布评论
     async fabucomment () {
-      let res = await fabucomment(this.postxinxi.id, { content: this.$refs.comment_nr.value })
+      var data = {
+        content: this.$refs.comment_nr.value
+      }
+      if (this.commentlist) {
+        data.parent_id = this.commentlist.id
+      }
+      let res = await fabucomment(this.postxinxi.id, data)
       // console.log(res)
       if (res.data.message === '评论发布成功') {
         this.$emit('Postacomment')
@@ -55,6 +69,8 @@ export default {
     // 取消评论，回到初始状态
     cancelcomment () {
       this.isFocus = false
+      // 如果点击父组件的回复取消的话，下次再点击回复，就不会弹出文本框了，因为监听事件只有在监听对象有变化的时候才会生效，所以让commpinglun值有一个变化,告诉父组件将commpinglun重置为一个空对象
+      this.$emit('commpinglunnull')
     }
   }
 }
