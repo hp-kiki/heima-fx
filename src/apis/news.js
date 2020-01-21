@@ -37,3 +37,19 @@ export const postlike = (id) => {
     url: `/post_like/${id}`
   })
 }
+
+// 搜索推荐
+export const postsearchrecommend = (params) => {
+  return axios({
+    url: `/post_search_recommend`,
+    params
+  })
+}
+
+// 搜索文章
+export const postsearch = (params) => {
+  return axios({
+    url: `/post_search`,
+    params
+  })
+}
